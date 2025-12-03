@@ -39,7 +39,7 @@ void main() {
     // Transform lighting vectors into tangent space
     L = TBN * (posLum - Position);
     V = TBN * (posCam - Position);
-    N = TBN * Nrm;  // You were missing this!
+    N = TBN * Nrm;
 
     texturePos = Texture.xy;
 

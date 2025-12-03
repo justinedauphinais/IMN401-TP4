@@ -14,13 +14,17 @@ bool EngineGL::init() {
     glViewport(0, 0, m_Width, m_Height);
     setClearColor(glm::vec4(.5, .5, .5, 1));
 
+    // A
+    Node *A = scene->getNode("A");
+
+
     // light node L
     Node *L = scene->getNode("L");
     // L->frame()->translate(glm::vec3(10, 10, 0));
     L->frame()->translate(glm::vec3(0, 1.75, 0));
     L->frame()->scale(glm::vec3(0.1));
     L->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
-    scene->getSceneNode()->adopt(L);
+    scene->getSceneNode()->adopt(A);
 
     BaseMaterial *lightMaterial = new BaseMaterial("light");
     L->setMaterial(lightMaterial);
@@ -47,11 +51,29 @@ bool EngineGL::init() {
     matPillar->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
     pillar->setMaterial(matPillar);
 
+    // Kitty
+    Node *kitty = scene->getNode("Kitty");
+    kitty->frame()->translate(glm::vec3(0, 0.775, 0));
+    kitty->frame()->scale(glm::vec3(1.0));
+    kitty->setModel(scene->m_Models.get<ModelGL>(ObjPath + "concrete_cat_statue_4k.obj"));
+
+    scene->getSceneNode()->adopt(kitty);
+
+    Texture2D *textureKitty = new Texture2D(ObjPath + "Textures/Cat/concrete_cat_statue_diff_4k.jpg");
+    Texture2D *textureKittyN = new Texture2D(ObjPath + "Textures/Cat/concrete_cat_statue_nor_gl_4k.jpg");
+    TextureMaterial *matKitty = new TextureMaterial("matKitty");
+    matKitty->setDiffuseTexture(textureKitty);
+    matKitty->setNormalMap(textureKittyN);
+    matKitty->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    kitty->setMaterial(matKitty);
+
     // (0,0.775,0) is the center of the pillar
 
-    scene->getSceneNode()->adopt(L);
+    A->adopt(L);
+    scene->getSceneNode()->adopt(A);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
+    scene->getSceneNode()->adopt(kitty);
 
     setupEngine();
     return (true);
