@@ -1,15 +1,15 @@
 
 
-#ifndef _BaseMaterial_
-#define _BaseMaterial_
+#ifndef _MoveMaterial_
+#define _MoveMaterial_
 
 #include "MaterialGL.h"
 
-class BaseMaterial : public MaterialGL {
+class MoveMaterial : public MaterialGL {
 public:
-    BaseMaterial(std::string name = "");
+    MoveMaterial(std::string name = "", glm::vec3 finalPosition = glm::vec3(0.0f), glm::vec3 positionDepart = glm::vec3(0.0f), float coef = 0.0f);
 
-    ~BaseMaterial();
+    ~MoveMaterial();
 
     virtual void render(Node *o);
 
@@ -18,10 +18,8 @@ public:
     virtual void displayInterface(){};
 
 protected:
-    GLProgram *vp;
-    GLProgram *fp;
-
-    GLuint l_View, l_Proj, l_Model; // location of uniforms
+    glm::vec3 finalPosition, positionDepart, pointCourbe, lastPosition;
+    std::chrono::steady_clock::time_point startTime;
 };
 
 #endif

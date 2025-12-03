@@ -4,6 +4,7 @@
 
 #include "Materials/BaseMaterial/BaseMaterial.h"
 #include "Materials/TextureMaterial/TextureMaterial.h"
+#include "Materials/MoveMaterial/MoveMaterial.h"
 
 #include "Texture2D.h"
 
@@ -16,12 +17,14 @@ bool EngineGL::init() {
 
     // A
     Node *A = scene->getNode("A");
-
+    MoveMaterial *matA = new MoveMaterial("matA", glm::vec3(0.0, 0.0, 0.0), glm::vec3(1.5, 0.0, 0.0), 1.0f);
+    A->setMaterial(matA);
 
     // light node L
     Node *L = scene->getNode("L");
     // L->frame()->translate(glm::vec3(10, 10, 0));
-    L->frame()->translate(glm::vec3(0, 1.75, 0));
+    //L->frame()->translate(glm::vec3(0, 1.75, 0));
+    L->frame()->translate(glm::vec3(0.75, 1, 0.3));
     L->frame()->scale(glm::vec3(0.1));
     L->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
     scene->getSceneNode()->adopt(A);
