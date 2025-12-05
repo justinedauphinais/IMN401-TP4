@@ -10,7 +10,9 @@
 
 #include "FrameBufferObject.h"
 
-//#include "Effects/Display/Display.h"
+#include "Effects/Display/Display.h"
+
+#include "Effects/DepthOfField/DepthOfField.h"
 //#include "Effects/Flou/Flou.h"
 //#include "Effects/Bloom/Bloom.h"
 
@@ -52,6 +54,8 @@ protected:
 
     // For TP 4
     FrameBufferObject *myFBO;
+    Display *display;
+    DepthOfField *dof;
     /*Display *display;
     Flou *flou;
     Bloom *bloom;*/

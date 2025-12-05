@@ -78,15 +78,25 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(pillar);
     scene->getSceneNode()->adopt(kitty);
 
+    // Depth of field
+    myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
+    dof = new DepthOfField("dof");
+
     setupEngine();
     return (true);
 }
 
 void EngineGL::render() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    myFBO->enable();
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    for (unsigned int i = 0; i < allNodes->nodes.size(); i++)
+    for (unsigned int i = 0; i < allNodes->nodes.size(); i++) {
         allNodes->nodes[i]->render();
+    }
+    myFBO->disable();
+
+    dof->apply(myFBO, nullptr);
 }
 
 void EngineGL::animate(const float elapsedTime) {
