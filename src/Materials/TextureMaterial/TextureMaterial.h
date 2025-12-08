@@ -4,11 +4,18 @@
 #define _TextureMaterial_
 
 #include "MaterialGL.h"
-#include <Texture2D.h>
+#include "Texture2D.h"
 
 class TextureMaterial : public MaterialGL {
 public:
     TextureMaterial(std::string name = "");
+
+    void setDiffuseTexture(Texture2D *texture);
+    void setNormalMap(Texture2D *texture);
+    void setPhong(float kd, float ka, float ks, int s);
+    void setFlagReverseTexture(bool v) { flagReverseTexture = v; }
+    void setCoefDist(float c) { coefDist = c; }
+    void setFlagDeform(bool d) { flagDeform = d; }
 
     ~TextureMaterial();
 
@@ -16,28 +23,23 @@ public:
 
     virtual void animate(Node *o, const float elapsedTime);
 
-    virtual void displayInterface(){};
-
-    // TP4
-    void setPhong(glm::vec3 ka, glm::vec3 kd, glm::vec3 ks, float shiny);
-    void setDiffuseTexture(Texture2D *tex);
-    void setNormalMap(Texture2D *tex);
+    virtual void displayInterface() {};
 
 protected:
+    std::string name;
+
     GLProgram *vp;
     GLProgram *fp;
 
-    GLuint l_View, l_Proj, l_Model, l_Temps,
-        l_posLum, l_color, l_posCam, 
-        l_texture, l_texture2, l_textureN,
-        l_ka, l_kd, l_ks, l_shiny; // location of uniforms
+    Texture2D *texture, *textureN;
 
-    Texture2D *textureDiff, *textureNorm;
+    float kd, ka, ks, coefDist;
+    int s;
+    glm::vec3 C;
+    bool flagReverseTexture;
+    bool flagDeform;
 
-    glm::vec3 u_ka, u_kd, u_ks;
-    float u_shiny;
-
-    float time = 0.0f;
+    GLuint l_View, l_Proj, l_Model, l_kd, l_ka, l_ks, l_s, l_C, l_posLum, l_posCam, l_flagTexture, l_time, l_distCoef, l_flagDeform; // location of uniforms
 };
 
 #endif

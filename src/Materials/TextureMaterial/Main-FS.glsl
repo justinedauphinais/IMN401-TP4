@@ -1,42 +1,46 @@
 #version 460
 
-uniform vec3 ka;
-uniform vec3 kd;
-uniform vec3 ks;
-uniform float shiny;
-
-in vec3 L;
-in vec3 V;
-in vec3 N;
-
-in vec3 colorObj;
-
-in vec2 texturePos;
-
-in float dist;
+uniform float kd;
+uniform float ka;
+uniform float ks;
+uniform int s;
+uniform vec3 C;
 
 layout(binding = 0) uniform sampler2D T;
 layout(binding = 2) uniform sampler2D TN;
 
 layout(location = 0) out vec4 Color;
 
+in vec3 fragL;
+in vec3 fragV;
+in vec2 fragTexCoord;
+in float dist;
+
 void main() {
-    vec3 tex = (texture(T, texturePos)).rgb;
 
-    vec3 nL = normalize(L);
-    vec3 nV = normalize(V);
-    vec3 nN = 2 * (texture(TN, texturePos).xyz) - 1;
-
-    vec3 R = reflect(-nL, nN);
-
-    float NL = max(dot(nN, nL), 0.0f);
-    float RV = max(dot(R, nV), 0.0f);
-
-    vec3 ambient = ka * tex;
-    vec3 diffuse = kd * NL * tex;
-    vec3 speculaire = ks * pow(RV, shiny) * vec3(1.0f, 1.0f, 1.0f);
-
-    vec3 couleur = ambient + diffuse + speculaire;
+    vec3 Nd = 2*(texture(TN, fragTexCoord).xyz) - 1;
     
-    Color = vec4(couleur, 1.0);
+    vec3 L = normalize(fragL);
+    vec3 V = normalize(fragV);
+
+    vec3 N = Nd; // on utilise la normale perturbée
+    vec3 R = reflect(-L, N);
+
+    vec4 tex = texture(T, fragTexCoord);
+
+    vec3 objColor = tex.rgb;
+
+    // éclairage diffus
+    float Id = kd * max(dot(N, L), 0.0);
+
+    // éclairage ambiant
+    float Ia = ka;
+
+    // éclairage spéculaire
+    float Is = ks * pow(max(dot(R, V), 0.0), s);
+
+    vec3 color = Ia * C * objColor + Id * C * objColor + Is * C;
+    Color = vec4(color, dist);
+
+    
 }

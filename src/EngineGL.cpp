@@ -40,7 +40,7 @@ bool EngineGL::init() {
     TextureMaterial *matBox = new TextureMaterial("matBox");
     matBox->setDiffuseTexture(textureBox);
     matBox->setNormalMap(textureBoxN);
-    matBox->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 60.0);
+    matBox->setPhong(1, 0.5, .1, 60.0);
     box->setMaterial(matBox);
 
     // Pillar
@@ -51,7 +51,7 @@ bool EngineGL::init() {
     TextureMaterial *matPillar = new TextureMaterial("matPillar");
     matPillar->setDiffuseTexture(texturePillar);
     matPillar->setNormalMap(texturePillarN);
-    matPillar->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    matPillar->setPhong(1, 0.5, .1, 60.0);
     pillar->setMaterial(matPillar);
 
     // Kitty
@@ -67,7 +67,7 @@ bool EngineGL::init() {
     TextureMaterial *matKitty = new TextureMaterial("matKitty");
     matKitty->setDiffuseTexture(textureKitty);
     matKitty->setNormalMap(textureKittyN);
-    matKitty->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    matKitty->setPhong(1, 0.5, .1, 60.0);
     kitty->setMaterial(matKitty);
 
     // (0,0.775,0) is the center of the pillar
