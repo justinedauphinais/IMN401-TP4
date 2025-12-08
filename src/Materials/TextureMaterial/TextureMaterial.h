@@ -10,11 +10,6 @@ class TextureMaterial : public MaterialGL {
 public:
     TextureMaterial(std::string name = "");
 
-    void setDiffuseTexture(Texture2D *texture);
-    void setNormalMap(Texture2D *texture);
-    void setPhong(float kd, float ka, float ks, int s);
-    void setCatDeform(bool d) { catDeform = d; }
-
     ~TextureMaterial();
 
     virtual void render(Node *o);
@@ -24,6 +19,8 @@ public:
     virtual void displayInterface() {};
 
 
+
+    void setCatDeform(bool d) { catDeform = d; }
 
 protected:
     std::string name;
