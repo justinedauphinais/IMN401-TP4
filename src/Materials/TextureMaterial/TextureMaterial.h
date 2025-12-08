@@ -18,7 +18,10 @@ public:
 
     virtual void displayInterface() {};
 
-
+    
+    void setDiffuseTexture(Texture2D *texture);
+    void setNormalMap(Texture2D *texture);
+    void setPhong(float kd, float ka, float ks, int s);
 
     void setCatDeform(bool d) { catDeform = d; }
 
