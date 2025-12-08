@@ -23,27 +23,25 @@ layout(location = 4) in vec4 Tangente;
 
 out vec3 L;
 out vec3 V;
-out vec3 N;
 out vec3 colorObj;
 out vec2 texturePos;
+out float dist;
 
 void main() {
-    // Normalize inputs
     vec3 T = normalize(Tangente.xyz);
     vec3 Nrm = normalize(Normale);
-    vec3 B = normalize(cross(Nrm, T) * Tangente.w);
+    vec3 B = cross(Normale, Tangente.xyz);
 
-    // Build correct TBN matrix
-    mat3 TBN = mat3(T, B, Nrm);
+    mat3 TBN = transpose(mat3(Tangente.xyz, B, Normale));
 
-    // Transform lighting vectors into tangent space
     L = TBN * (posLum - Position);
     V = TBN * (posCam - Position);
-    N = TBN * Nrm;
 
     texturePos = Texture.xy;
 
     colorObj = color;
+
+    dist = length(posCam - Position) * 0.1;
 
     gl_Position = Proj * View * Model * vec4(Position, 1.0);
 }

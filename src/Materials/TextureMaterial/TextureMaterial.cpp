@@ -34,6 +34,9 @@ void TextureMaterial::render(Node *o) {
 
     m_ProgramPipeline->bind();
 
+    glBindTextureUnit(0, textureDiff->getId());
+    glBindTextureUnit(2, textureNorm->getId());
+
     o->drawGeometry(GL_TRIANGLES);
     m_ProgramPipeline->release();
 }
@@ -62,21 +65,21 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     if (l_color >= 0) glProgramUniform3f(progID, l_color, 1.0f, 0.0f, 0.0f);
 
     // Position lumière
-    Node *Lumiere = scene->getNode("L");
-
     glm::vec3 P = glm::vec3(0.0f, 0.0f, 0.0f);
+    Node *Lumiere = scene->getNode("L");
     glm::vec3 positionLumiere = Lumiere->frame()->convertPtTo(P, o->frame());
+
+    if (l_posLum >= 0) glProgramUniform3f(progID, l_posLum, positionLumiere.x, positionLumiere.y, positionLumiere.z);
 
     // Position cam
     Camera *Cam = scene->camera();
     glm::vec3 PCam = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 positionCam = Cam->frame()->convertPtTo(PCam, o->frame());
 
-    if (l_posLum >= 0) glProgramUniform3f(progID, l_posLum, positionLumiere.x, positionLumiere.y, positionLumiere.z);
     if (l_posCam >= 0) glProgramUniform3f(progID, l_posCam, positionCam.x, positionCam.y, positionCam.z);
 
-    if (l_texture >= 0) glProgramUniformHandleui64ARB(fp->getId(), l_texture, textureDiff->getHandle());
-    if (l_textureN >= 0) glProgramUniformHandleui64ARB(fp->getId(), l_textureN, textureNorm->getHandle());
+    //if (l_texture >= 0) glProgramUniformHandleui64ARB(fp->getId(), l_texture, textureDiff->getHandle());
+    //if (l_textureN >= 0) glProgramUniformHandleui64ARB(fp->getId(), l_textureN, textureNorm->getHandle());
 
     // Phong parameters
     if (l_ka >= 0) glProgramUniform3f(fp->getId(), l_ka, u_ka.x, u_ka.y, u_ka.z);

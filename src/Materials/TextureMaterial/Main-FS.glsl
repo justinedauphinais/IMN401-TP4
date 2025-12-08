@@ -1,8 +1,5 @@
 #version 460
 
-uniform sampler2D textureDiffuse;
-uniform sampler2D textureN;
-
 uniform vec3 ka;
 uniform vec3 kd;
 uniform vec3 ks;
@@ -16,14 +13,19 @@ in vec3 colorObj;
 
 in vec2 texturePos;
 
+in float dist;
+
+layout(binding = 0) uniform sampler2D T;
+layout(binding = 2) uniform sampler2D TN;
+
 layout(location = 0) out vec4 Color;
 
 void main() {
-    vec3 tex = texture(textureDiffuse,  texturePos).rgb;
+    vec3 tex = (texture(T, texturePos)).rgb;
 
     vec3 nL = normalize(L);
     vec3 nV = normalize(V);
-    vec3 nN = 2 * (texture(textureN, texturePos).xyz) - 1;
+    vec3 nN = 2 * (texture(TN, texturePos).xyz) - 1;
 
     vec3 R = reflect(-nL, nN);
 
