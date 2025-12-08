@@ -44,9 +44,16 @@ void main() {
     texturePos = Texture.xy;
 
     colorObj = color;
+
     // distortion applied on each point
-    float chang = 0.5 * sin(temps * 0,01);
-    vec3  deplac = Position + normalize(normal) * chang;
+      float dist = distance(Position, posLum);
+
+    float delta = dist - 0.5 ;
+    delta = clamp(delta, -0.01, 0);
+
+
+   
+        deplac = Position + normalize(normal) * delta;
 
     gl_Position = Proj * View * Model * vec4(deplac, 1.0);
 }
