@@ -19,24 +19,29 @@ public:
     virtual void displayInterface(){};
 
     // TP4
-    void setPhong(glm::vec3 ka, glm::vec3 kd, glm::vec3 ks, float shiny);
+    void setPhong(float ka, float kd, float ks, int shiny);
     void setDiffuseTexture(Texture2D *tex);
     void setNormalMap(Texture2D *tex);
+    void setFlagReverseTexture(bool v) { flagReverseTexture = v; }
+    void setCoefDist(float c) { coefDist = c; }
+    void setFlagDeform(bool d) { catDeform = d; }
+
 
 protected:
     GLProgram *vp;
     GLProgram *fp;
 
-    GLuint l_View, l_Proj, l_Model, l_Temps,
-        l_posLum, l_color, l_posCam, 
-        l_texture, l_texture2, l_textureN,
-        l_ka, l_kd, l_ks, l_shiny; // location of uniforms
+    GLuint l_View, l_Proj, l_Model, l_kd, l_ka, l_ks, l_s, l_C, l_posLum, l_posCam, l_flagTexture, l_time, l_distCoef, l_flagDeform; // location of uniforms
 
-    Texture2D *textureDiff, *textureNorm;
+        // location of uniforms
 
-    glm::vec3 u_ka, u_kd, u_ks;
-    float u_shiny;
+    Texture2D *texture, *textureN;
 
+    float ka, kd, ks, coefDist;
+    int s;
+    glm::vec3 C;
+    bool flagReverseTexture;
+    bool catDeform;
     float time = 0.0f;
 };
 

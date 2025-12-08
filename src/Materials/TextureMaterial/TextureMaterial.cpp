@@ -4,7 +4,7 @@
 #include <glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 
-TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name), name(name), kd(0.7), ka(0.4), ks(5.0), s(100), flagReverseTexture(false), coefDist(0.1), flagDeform(false) {
+TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name), name(name), kd(0.7), ka(0.4), ks(5.0), s(100), flagReverseTexture(false), coefDist(0.1), catDeform(false) {
 
     vp = new GLProgram(MaterialPath + "TextureMaterial/Main-VS.glsl", GL_VERTEX_SHADER);
     fp = new GLProgram(MaterialPath + "TextureMaterial/Main-FS.glsl", GL_FRAGMENT_SHADER);
@@ -30,7 +30,7 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name), name(name
 
     l_time = glGetUniformLocation(vp->getId(), "time");
     l_distCoef = glGetUniformLocation(vp->getId(), "distCoef");
-    l_flagDeform = glGetUniformLocation(vp->getId(), "flagDeform");
+    l_catDeform = glGetUniformLocation(vp->getId(), "catDeform");
 }
 
 void TextureMaterial::setDiffuseTexture(Texture2D *texture) {
@@ -78,9 +78,11 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, false, glm::value_ptr(camera->getProjectionMatrix()));
     glProgramUniformMatrix4fv(vp->getId(), l_Model, 1, false, glm::value_ptr(o->frame()->getModelMatrix()));
 
+    
     glProgramUniform1f(fp->getId(), l_kd, kd);
     glProgramUniform1f(fp->getId(), l_ka, ka);
     glProgramUniform1f(fp->getId(), l_ks, ks);
+
     glProgramUniform1i(fp->getId(), l_s, s);
     glProgramUniform3f(fp->getId(), l_C, C.r, C.g, C.b);
     glProgramUniform1i(vp->getId(), l_flagTexture, flagReverseTexture ? 1 : 0);
@@ -94,7 +96,7 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     pCam = camera->frame()->convertPtTo(pCam, o->frame());
     glProgramUniform3f(vp->getId(), l_posCam, pCam.x, pCam.y, pCam.z);
 
-    if (flagDeform) {
-        glProgramUniform1i(vp->getId(), l_flagDeform, 1);
+    if (catDeform) {
+        glProgramUniform1i(vp->getId(), l_catDeform, 1);
     }
 }

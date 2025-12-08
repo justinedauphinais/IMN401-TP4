@@ -10,7 +10,7 @@ uniform int flagText;
 
 uniform float distCoef;
 uniform float time;
-uniform int flagDeform;
+uniform int catDeform;
 
 out gl_PerVertex {
     vec4 gl_Position;
@@ -29,22 +29,17 @@ layout(location = 3) in vec3 TexCoord;
 layout(location = 4) in vec4 Tangente;
 
 vec3 deformSurface(vec3 pos, vec3 normal) {
-    float frequency = 100.0; // Adjust for more/less bubbles
-    float amplitude = 0.2; // Adjust for bigger/smaller deformation
-    float speed = 1.0;     // Adjust animation speed
+    float dist = distance(pos, posLum);
 
-    // Create waves based on position and time
-    float displacement = amplitude * 
-        sin(frequency * pos.x + time * speed) * 
-        sin(frequency * pos.y + time * speed) * 
-        sin(frequency * pos.z + time * speed);
+    float delta = dist - 0.7 ;
+    delta = 0.5*clamp(delta, -0.01, 0);
 
-    return pos + normal * displacement;
+    return pos + normal * delta;
 }
 
 void main() {
     vec3 pos;
-    if(flagDeform == 1){
+    if(catDeform == 1){
         pos = deformSurface(Position,Normale);
     }else{
         pos = Position;

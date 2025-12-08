@@ -69,6 +69,7 @@ bool EngineGL::init() {
     matKitty->setDiffuseTexture(textureKitty);
     matKitty->setNormalMap(textureKittyN);
     matKitty->setPhong(1, 0.5, .1, 60.0);
+    matKitty->setCatDeform(true);
     kitty->setMaterial(matKitty);
 
     // (0,0.775,0) is the center of the pillar
