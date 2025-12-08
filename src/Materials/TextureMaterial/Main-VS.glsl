@@ -29,7 +29,7 @@ vec3 deformSurface(vec3 pos, vec3 normal) {
     float dist = distance(pos, posLum);
 
     float delta = dist - 0.7;
-    delta = 0.5 * clamp(delta, -0.01, 0);
+    delta = 0.5 * clamp(delta, -0.01, 0.0);
 
     return pos + normal * delta;
 }
