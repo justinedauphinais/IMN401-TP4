@@ -18,7 +18,7 @@ out gl_PerVertex {
 out vec3 vertexL;
 out vec3 vertexV;
 out vec2 textureCoord;
-out float distance;
+out float distanceCam;
 
 layout(location = 0) in vec3 Position;
 layout(location = 2) in vec3 Normale;
@@ -51,7 +51,7 @@ void main() {
     
     gl_Position = Proj * View * Model * (vec4(newPos, 1.0));
 
-    distance = length(posCam - newPos) * 0.1;
+    distanceCam = length(posCam - newPos) * 0.1;
 
     textureCoord = TextureCoordinates.xy;
 }

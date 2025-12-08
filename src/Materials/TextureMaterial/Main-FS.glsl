@@ -14,7 +14,7 @@ layout(location = 0) out vec4 Color;
 in vec3 vertexL;
 in vec3 vertexV;
 in vec2 textureCoord;
-in float distance;
+in float distanceCam;
 
 void main() {    
     vec4 tex = texture(textureDiff, textureCoord);
@@ -38,5 +38,5 @@ void main() {
     float Is = ks * pow(RV, s);
 
     vec3 color = Ia * tex.rgb + Id * tex.rgb + Is;
-    Color = vec4(color, distance);
+    Color = vec4(color, distanceCam);
 }
