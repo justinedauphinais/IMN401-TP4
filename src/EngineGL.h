@@ -10,12 +10,11 @@
 
 #include "FrameBufferObject.h"
 
-#include "Effects/Display/Display.h"
 
 #include "Effects/DepthOfField/DepthOfField.h"
 //#include "Effects/Flou/Flou.h"
 //#include "Effects/Bloom/Bloom.h"
-
+#include "Effects/Display/Display.h"
 class EngineGL {
 public:
     EngineGL(int width, int height);

@@ -1,6 +1,6 @@
 #pragma once
 #include "EffectGL.h"
-#include "Effects/Flou/Flou.h"
+
 
 class DepthOfField : public EffectGL {
 public:
