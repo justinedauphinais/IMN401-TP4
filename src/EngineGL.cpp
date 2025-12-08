@@ -88,11 +88,7 @@ bool EngineGL::init() {
 }
 
 void EngineGL::render() {
-    glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    for (unsigned int i = 0; i < allNodes->nodes.size(); i++)
-        allNodes->nodes[i]->render();
-    /*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     myFBO->enable();
     glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -101,7 +97,7 @@ void EngineGL::render() {
     }
     myFBO->disable();
 
-    dof->apply(myFBO, nullptr);*/
+    dof->apply(myFBO, nullptr);
 }
 
 void EngineGL::animate(const float elapsedTime) {
