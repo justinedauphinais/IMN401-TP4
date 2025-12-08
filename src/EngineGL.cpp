@@ -5,6 +5,7 @@
 #include "Materials/BaseMaterial/BaseMaterial.h"
 #include "Materials/TextureMaterial/TextureMaterial.h"
 #include "Materials/MoveMaterial/MoveMaterial.h"
+#include "Materials/DistortionMaterial/DistortionMaterial.h"
 
 #include "Texture2D.h"
 
@@ -64,7 +65,7 @@ bool EngineGL::init() {
 
     Texture2D *textureKitty = new Texture2D(ObjPath + "Textures/Cat/concrete_cat_statue_diff_4k.jpg");
     Texture2D *textureKittyN = new Texture2D(ObjPath + "Textures/Cat/concrete_cat_statue_nor_gl_4k.jpg");
-    TextureMaterial *matKitty = new TextureMaterial("matKitty");
+    TextureMaterial *matKitty = new DistortionMaterial("matKitty");
     matKitty->setDiffuseTexture(textureKitty);
     matKitty->setNormalMap(textureKittyN);
     matKitty->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
