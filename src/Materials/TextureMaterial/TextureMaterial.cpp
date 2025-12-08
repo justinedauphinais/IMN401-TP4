@@ -23,10 +23,7 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name), name(name
 
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
-    l_flagTexture = glGetUniformLocation(vp->getId(), "flagText");
 
-    l_time = glGetUniformLocation(vp->getId(), "time");
-    l_distCoef = glGetUniformLocation(vp->getId(), "distCoef");
     l_catDeform = glGetUniformLocation(vp->getId(), "catDeform");
 }
 
@@ -75,15 +72,17 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     pCam = camera->frame()->convertPtTo(pCam, o->frame());
 
     glProgramUniform3f(vp->getId(), l_posCam, pCam.x, pCam.y, pCam.z);
+
+    // Deform 
+    if (catDeform) {
+        glProgramUniform1i(vp->getId(), l_catDeform, 1);
+    }
 }
 
 void TextureMaterial::setDiffuseTexture(Texture2D *texture) {
     this->textureDiffuse = texture;
 }
 
-    if (catDeform) {
-        glProgramUniform1i(vp->getId(), l_catDeform, 1);
-    }
 void TextureMaterial::setNormalMap(Texture2D *texture) {
     this->textureNormale = texture;
 }

@@ -7,8 +7,6 @@ uniform mat4 Proj;
 uniform vec3 posLum;
 uniform vec3 posCam;
 
-uniform float distCoef;
-uniform float time;
 uniform int catDeform;
 
 out gl_PerVertex {
@@ -30,37 +28,30 @@ layout(location = 4) in vec4 Tangente;
 vec3 deformSurface(vec3 pos, vec3 normal) {
     float dist = distance(pos, posLum);
 
-    float delta = dist - 0.7 ;
-    delta = 0.5*clamp(delta, -0.01, 0);
+    float delta = dist - 0.7;
+    delta = 0.5 * clamp(delta, -0.01, 0);
 
     return pos + normal * delta;
 }
 
 void main() {
-    vec3 pos;
-    if(catDeform == 1){
-        pos = deformSurface(Position,Normale);
-    }else{
-        pos = Position;
+    vec3 newPos;
+    if (catDeform == 1) {
+        newPos = deformSurface(Position, Normale);
+    } else {
+        newPos = Position;
     }
 
     vec3 B = cross(Normale, Tangente.xyz);
 
     mat3 TBN = transpose(mat3(Tangente.xyz, B, Normale));
 
-    fragL = tTBN*(posLum - pos);
-    fragV = tTBN*(posCam - pos);
+    vertexL = TBN * (posLum - newPos);
+    vertexV = TBN * (posCam - newPos);
     
-    gl_Position = Proj * View * Model * (vec4(pos, 1.0));
+    gl_Position = Proj * View * Model * (vec4(newPos, 1.0));
 
-    dist = length(posCam - pos) * distCoef;
-
-    if(flagText == 1){
-        fragTexCoord = vec2(TexCoord.x, 1.0 - TexCoord.y);
-    }else{
-        fragTexCoord = TexCoord.xy;
-    }
-    
+    distance = length(posCam - newPos) * 0.1;
 
     textureCoord = TextureCoordinates.xy;
 }
