@@ -48,18 +48,14 @@ void main() {
 
     mat3 TBN = transpose(mat3(Tangente.xyz, B, Normale));
 
-    fragL = tTBN*(posLum - pos);
-    fragV = tTBN*(posCam - pos);
+    vertexL = TBN*(posLum - pos);
+    vertexV = TBN*(posCam - pos);
     
     gl_Position = Proj * View * Model * (vec4(pos, 1.0));
 
-    dist = length(posCam - pos) * distCoef;
 
-    if(flagText == 1){
-        fragTexCoord = vec2(TexCoord.x, 1.0 - TexCoord.y);
-    }else{
-        fragTexCoord = TexCoord.xy;
-    }
+
+
     
 
     textureCoord = TextureCoordinates.xy;

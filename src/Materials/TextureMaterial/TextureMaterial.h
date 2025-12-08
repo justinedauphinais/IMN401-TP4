@@ -13,8 +13,6 @@ public:
     void setDiffuseTexture(Texture2D *texture);
     void setNormalMap(Texture2D *texture);
     void setPhong(float kd, float ka, float ks, int s);
-    void setFlagReverseTexture(bool v) { flagReverseTexture = v; }
-    void setCoefDist(float c) { coefDist = c; }
     void setCatDeform(bool d) { catDeform = d; }
 
     ~TextureMaterial();
@@ -25,9 +23,7 @@ public:
 
     virtual void displayInterface() {};
 
-    void setDiffuseTexture(Texture2D *texture);
-    void setNormalMap(Texture2D *texture);
-    void setPhong(float kd, float ka, float ks, int s);
+
 
 protected:
     std::string name;
@@ -37,10 +33,10 @@ protected:
 
     Texture2D *textureDiffuse, *textureNormale;
 
-    float kd, ka, ks, coefDist;
+    float kd, ka, ks;
     int s;
     glm::vec3 C;
-    bool flagReverseTexture;
+
     bool catDeform;
 
     GLuint l_View, l_Proj, l_Model, l_kd, l_ka, l_ks, l_s, l_C, l_posLum, l_posCam, l_flagTexture, l_time, l_distCoef, l_catDeform; // location of uniforms

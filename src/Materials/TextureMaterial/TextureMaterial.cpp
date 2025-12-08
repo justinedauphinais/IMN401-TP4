@@ -73,7 +73,9 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     // Position de la caméra
     glm::vec3 pCam = glm::vec3(0.0, 0.0, 0.0);
     pCam = camera->frame()->convertPtTo(pCam, o->frame());
-
+    if(catDeform) {
+        glProgramUniform1i(vp->getId(), l_catDeform, 1);
+    }
     glProgramUniform3f(vp->getId(), l_posCam, pCam.x, pCam.y, pCam.z);
 }
 
@@ -81,9 +83,7 @@ void TextureMaterial::setDiffuseTexture(Texture2D *texture) {
     this->textureDiffuse = texture;
 }
 
-    if (catDeform) {
-        glProgramUniform1i(vp->getId(), l_catDeform, 1);
-    }
+
 void TextureMaterial::setNormalMap(Texture2D *texture) {
     this->textureNormale = texture;
 }
