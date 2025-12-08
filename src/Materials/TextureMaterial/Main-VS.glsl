@@ -6,7 +6,6 @@ uniform mat4 Proj;
 
 uniform vec3 posLum;
 uniform vec3 posCam;
-uniform int flagText;
 
 uniform float distCoef;
 uniform float time;
@@ -18,14 +17,14 @@ out gl_PerVertex {
     float gl_ClipDistance[];
 };
 
-out vec3 fragL;
-out vec3 fragV;
-out vec2 fragTexCoord;
-out float dist;
+out vec3 vertexL;
+out vec3 vertexV;
+out vec2 textureCoord;
+out float distance;
 
 layout(location = 0) in vec3 Position;
 layout(location = 2) in vec3 Normale;
-layout(location = 3) in vec3 TexCoord;
+layout(location = 3) in vec3 TextureCoordinates;
 layout(location = 4) in vec4 Tangente;
 
 vec3 deformSurface(vec3 pos, vec3 normal) {
@@ -47,7 +46,7 @@ void main() {
 
     vec3 B = cross(Normale, Tangente.xyz);
 
-    mat3 tTBN = transpose(mat3(Tangente.xyz, B, Normale));
+    mat3 TBN = transpose(mat3(Tangente.xyz, B, Normale));
 
     fragL = tTBN*(posLum - pos);
     fragV = tTBN*(posCam - pos);
@@ -63,4 +62,5 @@ void main() {
     }
     
 
+    textureCoord = TextureCoordinates.xy;
 }

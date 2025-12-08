@@ -25,13 +25,17 @@ public:
 
     virtual void displayInterface() {};
 
+    void setDiffuseTexture(Texture2D *texture);
+    void setNormalMap(Texture2D *texture);
+    void setPhong(float kd, float ka, float ks, int s);
+
 protected:
     std::string name;
 
     GLProgram *vp;
     GLProgram *fp;
 
-    Texture2D *texture, *textureN;
+    Texture2D *textureDiffuse, *textureNormale;
 
     float kd, ka, ks, coefDist;
     int s;

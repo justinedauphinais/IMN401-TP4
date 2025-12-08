@@ -2,7 +2,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 DepthOfField::DepthOfField(std::string name) : EffectGL(name) {
-    vp = new GLProgram(EffectPath + "common/Effect-VS.glsl", GL_VERTEX_SHADER);
+    vp = new GLProgram(EffectPath + "DepthOfField/DepthOfField-VS.glsl", GL_VERTEX_SHADER);
     fp = new GLProgram(EffectPath + "DepthOfField/DepthOfField-FS.glsl", GL_FRAGMENT_SHADER);
 
     m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
