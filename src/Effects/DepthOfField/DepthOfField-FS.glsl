@@ -1,4 +1,4 @@
-﻿#version 460
+#version 460
 
 layout(binding = 0) uniform sampler2D src;
 
@@ -15,7 +15,6 @@ void main()
     float focusDist = 0.2;
     float focusRange = 0.5;
 
-    // In focus = no blur
     if (abs(dist - focusDist) <= focusRange) {
         Color = vec4(tex.rgb, 1.0);
         return;
