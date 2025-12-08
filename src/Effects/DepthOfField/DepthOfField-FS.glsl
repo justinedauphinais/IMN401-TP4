@@ -1,26 +1,28 @@
 #version 460
 
-layout(binding = 0) uniform sampler2D src;
+layout(binding = 0) uniform sampler2D myFBO;
 
 in vec2 uv;
+
 layout(location = 0) out vec4 Color;
 
 void main() 
 {
-    vec2 invSize = 1.0 / vec2(textureSize(src, 0));
+    vec2 invSize = 1.0 / vec2(textureSize(myFBO, 0));
 
-    vec4 tex = texture(src, uv);
-    float dist = tex.a;
+    vec4 tex = texture(myFBO, uv);
 
-    float focusDist = 0.2;
+    float distance = tex.a;
+
+    float focusDistance = 0.2;
     float focusRange = 0.5;
 
-    if (abs(dist - focusDist) <= focusRange) {
+    if (abs(distance - focusDistance) <= focusRange) {
         Color = vec4(tex.rgb, 1.0);
         return;
     }
 
-    float blurAmount = clamp(abs(dist - focusDist) - focusRange, 0.0, 1.0);
+    float blurAmount = clamp(abs(distance - focusDistance) - focusRange, 0.0, 1.0);
 
     int k = int(mix(1.0, 4.0, blurAmount));
 
@@ -33,7 +35,7 @@ void main()
 
             sampleUv = clamp(sampleUv, vec2(0.0), vec2(1.0));
 
-            c += texture(src, sampleUv).rgb;
+            c += texture(myFBO, sampleUv).rgb;
             count++;
         }
     }
